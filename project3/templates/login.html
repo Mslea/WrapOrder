@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content" style="height: 600px;display: flex; justify-content: center;align-items: center;">
+  <div class="ps-home-contact__form" style="width: 20%">
+    <header style="margin-bottom: 40px;">
+        <h3 style="text-align: center;">LOG IN</h3>
+    </header>
+    <footer>
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label>Userame<span>*</span></label>
+                <input class="form-control" type="text" name="username">
+            </div>
+            <div class="form-group" style="margin-bottom: 50px;">
+                <label>Password<span>*</span></label>
+                <input class="form-control" type="password" name="password">
+            </div>
+            <div class="form-group text-center">
+                <button class="ps-btn">LOG IN<i class="fa fa-angle-right"></i></button>
+            </div>
+            <div style="text-align: center;"><a href="#" style="margin-top: 20px;">Create an a account</a></div>
+            
+        </form>
+    </footer>
+</div>
+
+</div>
+
+
+
+{% endblock content %}
