@@ -51,6 +51,9 @@ class Order_detail(models.Model):
     def price(self):
         return Product.objects.get(product_id = self.product_id).price* self.quality
 
+    def getName(self):
+        return Product.objects.get(product_id= self.product_id).name
+
 
 
 

@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div style="height: 800px;">
-        <img src="{% url 'video-feed' %}" alt="">
+<div class="container-fluid">
+    <div class="row" style="height: 60px;"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div style="height: 800px;margin-left:100px ;">
+                <img src="{% url 'video-feed' %}" alt="">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="result">
+
+            </div>
+        </div>
+        
     </div>
-    
+</div>
+
+
+<script>
+  setInterval(function(){
+    $.get('/wrap/orderwrap/',function(data){
+            $('#result').html(data);
+        });
+  },1000)
+</script>
 {% endblock content %}

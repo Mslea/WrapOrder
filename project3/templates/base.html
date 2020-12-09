@@ -35,8 +35,12 @@
   <link rel="stylesheet" href="{% static 'plugins/revolution/css/settings.css' %}">
   <link rel="stylesheet" href="{% static 'plugins/revolution/css/layers.css' %}">
   <link rel="stylesheet" href="{% static 'plugins/revolution/css/navigation.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chinhnt.css' %}">
   <!-- Custom-->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
+  </script>
+  <script src="{% static 'js/ajax-wrap.js' %}"></script>
   <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
   <!--WARNING: Respond.js doesn't work if you view the page via file://-->
   <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
@@ -55,12 +59,25 @@
             <p>127 Lê Thanh Nghị, Hai Bà Trưng,Hà Nội</p>
           </div>
           <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-            <div class="header__actions">{% if user.username %}
-              <a href="#">
+            <div class="header__actions">
+              {% if user.username %}
+              <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"> <i class="fas fa-user"></i>
+                  {{user.username}}</a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'logout' %}" style="text-transform: capitalize;">Logout</a></li>
+                 
+                </ul>
+              </div>
+              <!-- <a href="#">
                 <i class="fas fa-user"></i>
               {{user.username}}
               </a>
-              
+              <ul class="dropdown-menu">
+                <li><a href="#">English</a></li>
+                <li><a href="#">Japanese</a></li>
+                <li><a href="#">Chinese</a></li>
+              </ul> -->
               {% else %}
               <a href="{% url 'login' %}">Login & Regiser</a>
               {% endif %}
@@ -69,7 +86,6 @@
                 <ul class="dropdown-menu">
                   <li><a href="{% url 'order_list' %}" style="text-transform: capitalize;">Order</a></li>
                   <li><a href="/admin/" style="text-transform: capitalize;">admin</a></li>
-                  <li><a href="#"><img src="{% static 'images/flag/japan.svg' %}" alt=""> JPN</a></li>
                 </ul>
               </div>
               <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"

@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from .models import *
-from django.contrib.auth import authenticate,login
-from django.http import HttpResponse
+from django.contrib.auth import authenticate,login, logout
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
+import json
 
 def home(request):
     product_list = Product.objects.all()[:8]
@@ -21,6 +22,15 @@ def order_list(request):
     context = {'order_list':orders}
     return render(request,'order.html',context)
 def user_login(request):
+    return render(request,'login.html')
+
+def user_logout(request):
+# Since we know the user is logged in, we can now just log them out.
+    logout(request)
+# Take the user back to the homepage.
+    return redirect('home')
+
+def validate_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -28,11 +38,9 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
-                return redirect('home')
+                return JsonResponse({'status':'ok'})
             else:
-                return HttpResponse("Your Rango account is disabled.")
+                return JsonResponse({'status':'ok'})
+                
         else:
-            print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
-    else:
-        return render(request,'login.html')
+            return JsonResponse({'status':'fail'})

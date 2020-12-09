@@ -7,6 +7,8 @@ import base64
 from process_order.models import *
 import requests
 import time
+from django.conf import settings
+import datetime
 # Create your views here.
 
 def base64decode(path):
@@ -42,19 +44,17 @@ def isorder_dertail(code,order):
 def wrap(request):
     template =get_template('wrap.html')
     return HttpResponse(template.render({}, request))
-
+order_list = ['mn240108','aaaaaa','bbbbbb']
 def stream():
     cap = cv2.VideoCapture(0)
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    order_list = list()
     order_video = list()
+    global order_list
     while True:
         ret, frame = cap.read()
-
         if not ret:
             print("Error: failed to capture image")
             break
-
         cv2.imwrite('./media/video_data/demo.jpg',frame)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + open('./media/video_data/demo.jpg', 'rb').read() + b'\r\n')
@@ -99,27 +99,18 @@ def stream():
                             order_video.remove(order_video[0])
                             order_video[0].release()
                             print('\nwrap 1 order')
+    print(order_list) 
+
+                        
         
 
 def video_feed(request):
     return StreamingHttpResponse(stream(), content_type='multipart/x-mixed-replace; boundary=frame')
-
-def record_video(request):
-    cap = cv2.VideoCapture(0)
-
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640,480))
-
-    while(cap.isOpened()):
-        ret, frame = cap.read()
-        if ret==True:
-            out.write(frame)
-
-            cv2.imshow('frame',frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-        else:
-            break
-    cap.release()
-    out.release()
-    cv2.destroyAllWindows()
+def getorderwrap(request):
+    if not order_list:
+        return HttpResponse('')
+    else:
+        order = Order.objects.get(order_code = order_list[0])
+        order_detail = order.order_detail.all()
+        context = {'order_list':order_list,"order_detail":order_detail}
+        return render(request,'orderlistwrap.html',context)

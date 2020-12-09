@@ -1,7 +1,0 @@
-opencv-contrib-python==4.3.0.36
-numpy
-flask
-flask_cors
-base64
-Pillow
-pyzbar

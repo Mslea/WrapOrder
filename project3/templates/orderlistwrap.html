@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="ps-cart-listing">
+            <table class="table ps-cart__table">
+                <thead>
+                    <tr>
+                        <th>Order Wrapping</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order  in order_list  %}
+                    <tr>
+                        <td>{{order}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="ps-cart-listing">
+            <table class="table ps-cart__table">
+                <thead>
+                    <tr>
+                        <th>Product id</th>
+                        <th>Name</th>
+                        <th>Quality</th>
+                        <th>Quality Wrapped</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for orderdetail  in order_detail  %}
+                    <tr>
+                        <td>{{orderdetail.product_id}}</td>
+                        <td>{{orderdetail.getName}}</td>
+                        <td>{{orderdetail.quality}}</td>
+                        <td>{{orderdetail.quality_wraped}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

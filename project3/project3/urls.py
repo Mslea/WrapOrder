@@ -27,7 +27,9 @@ urlpatterns = [
     path('wrap/',wbviews.wrap,name = 'wrap'),
     path('video_feed/', wbviews.video_feed, name="video-feed"),
     path('login/',views.user_login,name = 'login'),
-    path('record/',wbviews.record_video,name = 'record'),
+    path('logout/', views.user_logout,name = 'logout'),
+    path('validate_login/',views.validate_login,name = 'validate_login'),
+    path('wrap/orderwrap/',wbviews.getorderwrap,name = 'getorderwrap')
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
