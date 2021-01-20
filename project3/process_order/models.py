@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Order(models.Model):
     user = models.ForeignKey(User, related_name='order', on_delete=models.CASCADE,default=None)
-    order_code =models.CharField(max_length=10)
+    order_code =models.CharField(max_length=20)
     status = models.CharField(max_length=10)
     price = models.PositiveIntegerField(default=0)
     def __str__(self):
@@ -29,7 +29,7 @@ class Order(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
-    product_id = models.CharField(max_length=8,unique=True)
+    product_id = models.CharField(max_length=20,unique=True)
     image_product = models.FileField(upload_to='image_product/',blank=True)
     image_product1 = models.FileField(upload_to='image_product/',blank=True)
     image_product2 = models.FileField(upload_to='image_product/',blank=True)
@@ -43,7 +43,7 @@ class Product(models.Model):
         return self.name
 
 class Order_detail(models.Model):
-    product_id = models.CharField(max_length=8)
+    product_id = models.CharField(max_length=20)
     quality = models.PositiveIntegerField(default=0)
     order = models.ForeignKey(Order, related_name='order_detail',on_delete=models.CASCADE)
     quality_wraped = models.PositiveIntegerField(default=0)

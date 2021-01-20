@@ -44,7 +44,7 @@ def isorder_dertail(code,order):
 def wrap(request):
     template =get_template('wrap.html')
     return HttpResponse(template.render({}, request))
-order_list = ['mn240108','aaaaaa','bbbbbb']
+order_list = []
 def stream():
     cap = cv2.VideoCapture(0)
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
@@ -60,7 +60,7 @@ def stream():
                b'Content-Type: image/jpeg\r\n\r\n' + open('./media/video_data/demo.jpg', 'rb').read() + b'\r\n')
         
         b64 = base64decode('./media/video_data/demo.jpg')
-        r = requests.post(url='http://127.0.0.1:5000/predict',json={'Image_base64':b64})
+        r = requests.post(url='http://127.0.0.1:5000//predict',json={'Image_base64':b64})
         code =r.json()['predicted']
         if not code:
             if order_video:
@@ -72,7 +72,7 @@ def stream():
                 if order in order_list:
                     index = order_list.index(order)
                     order_list.remove(order)
-                    order_list.index(0,order)
+                    order_list.insert(0,order)
                     t = order_video[index]
                     order_video.remove(t)
                     order_video.insert(0,t)

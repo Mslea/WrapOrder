@@ -12,18 +12,22 @@ def home(request):
 # Create your views here.
 @login_required
 def order_detail(request,ordercode):
+    price = Order.objects.get(order_code = ordercode).price()
     order_detail_list = Order_detail.objects.filter(order__order_code = ordercode)
-    context = {'order_detail_list': order_detail_list}
+    context = {'price':price,'order_detail_list': order_detail_list}
     return render(request,'cart.html',context)
     
 @login_required
 def order_list(request):
     orders = Order.objects.all()
-    context = {'order_list':orders}
+    price = 0
+    for order in orders:
+        price += order.price()
+
+    context = {'order_list':orders, 'price': price}
     return render(request,'order.html',context)
 def user_login(request):
     return render(request,'login.html')
-
 def user_logout(request):
 # Since we know the user is logged in, we can now just log them out.
     logout(request)
